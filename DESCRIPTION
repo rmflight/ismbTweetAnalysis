@@ -5,6 +5,9 @@ Authors@R: "Robert M Flight <rflight79@gmail.com> [aut, cre]"
 Description: Reports the analysis of two ISMB tweet datasets
 Depends:
     R (>= 3.0.3)
+Imports:
+    tm,
+    stringr
 License: CC0
 LazyData: true
 VignetteBuilder: knitr
