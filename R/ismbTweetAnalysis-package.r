@@ -14,9 +14,10 @@ NULL
 #'   \item created. the date and time of the tweet
 #'   \item id. the twitter id of the tweet
 #'   \item screenName. who sent the tweet
+#'   \item hashSearch. the hashtag that was searched
 #' }
 #' 
-#' @format A data frame with 3162 rows and 4 variables
+#' @format A data frame with 3162 rows and 5 variables
 #' @name ismb2012
 #' @source \url{https://github.com/neilfws/Twitter/tree/master/ismb/data}
 #' @docType data
@@ -43,3 +44,21 @@ readTweetData <- function(file, hashSearch, widths=c(18, 14, 18, 1000)){
   
   return(tweetData)
 }
+
+#' ISMB tweets from 2014
+#' 
+#' A set of tweets from ISMB 2014 meeting collected by Stephen Turner
+#' 
+#' \itemize{
+#'   \item text. the text of the tweet
+#'   \item created. the date and time of the tweet
+#'   \item id. the twitter id of the tweet
+#'   \item screenName. who sent the tweet
+#'   \item hashSearch. the hashtag that was searched
+#' }
+#' 
+#' @format A data frame with 3235 rows and 5 variables
+#' @name ismb2014
+#' @source \url{https://github.com/stephenturner/twitterchive}
+#' @docType data
+NULL

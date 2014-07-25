@@ -17,7 +17,17 @@ extPath <- file.path(baseLoc, "extdata")
 ```{r data2012, eval=FALSE}
 load(file.path(extPath, "ismb2012.RData"))
 ismb <- ismb[, c("text", "created", "id", "screenName")]
-ismb$screenName <- paste("@", ismb$screenName, sep="")
+ismb$hashSearch <- "ismb"
 save(ismb, file="data/ismb2012.RData")
+```
+
+This is especially important for the 2014 data, because it is not in `rdata` format, and there were actually three different hashtags searched for. 
+
+```{r data2014, eval=FALSE}
+ismb <- readTweetData(file.path(extPath, "ismb.txt"), "ismb")
+ismb2014 <- readTweetData(file.path(extPath, "ismb2014.txt"), "ismb2014")
+ismb14 <- readTweetData(file.path(extPath, "ismb14.txt"), "ismb14")
+ismb <- rbind(ismb, ismb14, ismb2014)
+save(ismb, file="data/ismb2014.RData")
 ```
 
