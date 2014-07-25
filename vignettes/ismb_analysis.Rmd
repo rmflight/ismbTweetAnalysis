@@ -31,3 +31,9 @@ ismb <- rbind(ismb, ismb14, ismb2014)
 save(ismb, file="data/ismb2014.RData")
 ```
 
+# Analysis
+
+Lets do some simple things in each case. For example, we can look at the distribution of tweets by time, who had the most `retweets`, who was the most prolific tweeter (as a percentage of total tweets), etc, and even for changes between the two years. Note that this is not the most comprehensive analysis we could do, because this is mostly an example analysis of how to do an analysis as a package vignette, but I need to do something, right?
+
+## 2012 
+
