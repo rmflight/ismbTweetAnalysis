@@ -8,3 +8,16 @@
 The goal of this work is to analyze two different collections of archived tweets from the ISMB conferences from 2012 and 2014, and compare and contrast them. The collections of tweets are from Neil Saunders ([his initial analysis](http://nsaunders.wordpress.com/2012/08/16/twitter-coverage-of-the-ismb-2012-meeting-some-statistics/) and [data](https://github.com/neilfws/Twitter/tree/master/ismb/data)) and Stephen Turner ([initial analysis](http://gettinggeneticsdone.blogspot.com/2013/05/automated-analysis-tweets-bioinformatics-twitterchive.html) and [data](https://github.com/stephenturner/twitterchive)).
 
 Before we start to use this data, we will do some munging on it so that both data-sets are comparable and we can apply the same functions to them for comparison.
+
+```{r datamunging}
+baseLoc <- system.file(package="ismbTweetAnalysis")
+extPath <- file.path(baseLoc, "extdata")
+```
+
+```{r data2012, eval=FALSE}
+load(file.path(extPath, "ismb2012.RData"))
+ismb <- ismb[, c("text", "created", "id", "screenName")]
+ismb$screenName <- paste("@", ismb$screenName, sep="")
+save(ismb, file="data/ismb2012.RData")
+```
+

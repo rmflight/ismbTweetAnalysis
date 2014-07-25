@@ -3,7 +3,8 @@ Title: Analayzes two ISMB tweet datasets
 Version: 0.1
 Authors@R: "Robert M Flight <rflight79@gmail.com> [aut, cre]"
 Description: Reports the analysis of two ISMB tweet datasets
-Depends: R (>= 3.0.3)
+Depends:
+    R (>= 3.0.3)
 License: CC0
 LazyData: true
 VignetteBuilder: knitr
