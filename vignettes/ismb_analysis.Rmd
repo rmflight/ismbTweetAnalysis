@@ -1,0 +1,4 @@
+<!--
+%\VignetteEngine{knitr}
+%\VignetteIndexEntry{ISMB Twitter Analysis}
+-->
