@@ -62,3 +62,23 @@ readTweetData <- function(file, hashSearch, widths=c(18, 14, 18, 1000)){
 #' @source \url{https://github.com/stephenturner/twitterchive}
 #' @docType data
 NULL
+
+#' user tweet counts
+#' 
+#' calculates the number of tweets for each user, giving the total tweets, 
+#' total that were retweets, and total that were original. Assumes that a retweet
+#' starts with the text "RT"
+#' 
+#' @param tweetDF data frame of tweets
+#' @return data.frame with user, total, original, retweet
+#' @export
+tweetCounts <- function(tweetDF){
+  isRT <- grepl("^RT", tweetDF$text)
+  rtSplit <- split(isRT, tweetDF$screenName)
+  
+  nTweet <- sapply(rtSplit, length)
+  nRT <- sapply(rtSplit, sum)
+  
+  tweetC <- data.frame(screenName = names(rtSplit), total = nTweet, original = nTweet - nRT, retweet = nRT, stringsAsFactors = FALSE)
+  return(tweetC)
+}
