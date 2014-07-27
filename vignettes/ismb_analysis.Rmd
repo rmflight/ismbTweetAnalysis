@@ -94,3 +94,24 @@ head(counts2014[order(counts2014$total, decreasing=TRUE), ])
 head(counts2014[order(counts2014$retweet, decreasing=TRUE), ])
 ```
 
+## Comparison
+
+### Density of Tweets Compared to Start Time
+
+Now we want to do a comparison between the two datasets. Initially, we will compare the frequency of tweets over time with respect to the starting date of the conference. In 2012, the special interest groups started at 8:30, July 13, 2012. In 2014, the start was at 8:30, July 11, 2014. We will calculate the difference in time of the tweets compared to the start time in hours.
+
+```{r startDiff}
+start2012 <- as.POSIXlt("2012-07-13 08:30 PST")
+start2014 <- as.POSIXlt("2014-07-11 08:30 PST")
+
+diff12 <- as.numeric(difftime(ismb12$created, start2012, units = "hours"))
+diff14 <- as.numeric(difftime(ismb14$created, start2014, units = "hours"))
+
+diffAll <- data.frame(time = c(diff12, diff14), year = rep(c("12", "14"), times = c(length(diff12), length(diff14))))
+```
+
+```{r plotStart}
+ggplot(diffAll, aes(x = time, fill = year)) + geom_density(alpha = 0.5)
+```
+
+
