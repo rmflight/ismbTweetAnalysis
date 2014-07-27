@@ -4,9 +4,8 @@ Version: 0.1
 Authors@R: "Robert M Flight <rflight79@gmail.com> [aut, cre]"
 Description: Reports the analysis of two ISMB tweet datasets
 Depends:
-    R (>= 3.0.3)
+    R (>= 3.0.1)
 Imports:
-    tm,
     stringr
 License: CC0
 LazyData: true

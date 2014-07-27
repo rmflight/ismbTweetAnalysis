@@ -1,0 +1,117 @@
+
+## ----datamunging---------------------------------------------------------
+baseLoc <- system.file(package="ismbTweetAnalysis")
+extPath <- file.path(baseLoc, "extdata")
+
+
+## ----data2012, eval=FALSE------------------------------------------------
+## load(file.path(extPath, "ismb2012.RData"))
+## ismb12 <- ismb[, c("text", "created", "id", "screenName")]
+## ismb12$hashSearch <- "ismb"
+## save(ismb12, file="data/ismb2012.RData")
+
+
+## ----data2014, eval=FALSE------------------------------------------------
+## ismb <- readTweetData(file.path(extPath, "ismb.txt"), "ismb")
+## ismb2014 <- readTweetData(file.path(extPath, "ismb2014.txt"), "ismb2014")
+## ismb14 <- readTweetData(file.path(extPath, "ismb14.txt"), "ismb14")
+## ismb14 <- rbind(ismb, ismb14, ismb2014)
+## save(ismb14, file="data/ismb2014.RData")
+
+
+## ----load2012------------------------------------------------------------
+library(ismbTweetAnalysis)
+data(ismb2012)
+head(ismb12)
+
+
+## ----visualize2012-------------------------------------------------------
+library(ggplot2)
+ggplot(ismb12, aes(x=created)) + geom_bar()
+
+
+## ----counts2012----------------------------------------------------------
+counts2012 <- tweetCounts(ismb12)
+head(counts2012)
+head(counts2012[order(counts2012$total, decreasing = TRUE),])
+
+
+## ----counts2012Original--------------------------------------------------
+head(counts2012[order(counts2012$original, decreasing = TRUE), ])
+
+
+## ----counts2012retweet---------------------------------------------------
+head(counts2012[order(counts2012$retweet, decreasing = TRUE), ])
+
+
+## ----load2014------------------------------------------------------------
+data(ismb2014)
+
+
+## ----vis2014-------------------------------------------------------------
+ggplot(ismb14, aes(x = created)) + geom_bar()
+
+
+## ----counts2014----------------------------------------------------------
+counts2014 <- tweetCounts(ismb14)
+head(counts2014)
+
+
+## ----topTotal2014--------------------------------------------------------
+head(counts2014[order(counts2014$total, decreasing=TRUE), ])
+
+
+## ----topRT2014-----------------------------------------------------------
+head(counts2014[order(counts2014$retweet, decreasing=TRUE), ])
+
+
+## ----startDiff-----------------------------------------------------------
+start2012 <- as.POSIXlt("2012-07-13 08:30 PST")
+start2014 <- as.POSIXlt("2014-07-11 08:30 PST")
+
+diff12 <- as.numeric(difftime(ismb12$created, start2012, units = "hours"))
+diff14 <- as.numeric(difftime(ismb14$created, start2014, units = "hours"))
+
+diffAll <- data.frame(time = c(diff12, diff14), year = rep(c("12", "14"), times = c(length(diff12), length(diff14))))
+
+
+## ----plotStart-----------------------------------------------------------
+ggplot(diffAll, aes(x = time, fill = year)) + geom_density(alpha = 0.5)
+
+
+## ----bothConf------------------------------------------------------------
+bothYears <- intersect(ismb12$screenName, ismb14$screenName)
+
+
+## ----calcRanks-----------------------------------------------------------
+counts2012$rank <- tweetRank(counts2012$total)
+counts2014$rank <- tweetRank(counts2014$total)
+
+countDiff1214 <- abs(counts2012[bothYears, "rank"] - counts2014[bothYears, "rank"])
+countDiff1214 <- data.frame(screenName = bothYears, diff = countDiff1214, stringsAsFactors = FALSE)
+countDiff1214 <- countDiff1214[order(countDiff1214$diff),]
+head(countDiff1214)
+tail(countDiff1214)
+
+
+## ----findRT--------------------------------------------------------------
+rtCount12 <- retweetCount(ismb12)
+rtCount14 <- retweetCount(ismb14)
+
+
+## ----rankRT--------------------------------------------------------------
+rtTot12 <- totalRT(rtCount12, "countRT")
+rtTot14 <- totalRT(rtCount14, "countRT")
+
+rtTot12$rank <- tweetRank(rtTot12$sumRT)
+rtTot14$rank <- tweetRank(rtTot14$sumRT)
+
+bothRT <- intersect(rtTot12$screenName, rtTot14$screenName)
+
+rtDiff1214 <- abs(rtTot12[bothRT, "rank"] - rtTot14[bothRT, "rank"])
+rtDiff1214 <- data.frame(screenName = bothRT, diff = rtDiff1214, stringsAsFactors = FALSE)
+rtDiff1214 <- rtDiff1214[order(rtDiff1214$diff), ]
+head(rtDiff1214)
+tail(rtDiff1214)
+
+
