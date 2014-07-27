@@ -39,6 +39,7 @@ Lets do some simple things in each case. For example, we can look at the distrib
 ## 2012 
 
 ```{r load2012}
+library(ismbTweetAnalysis)
 data(ismb2012)
 head(ismb)
 ```
@@ -46,5 +47,21 @@ head(ismb)
 ```{r visualize2012}
 library(ggplot2)
 ggplot(ismb, aes(x=created)) + geom_bar()
+```
+
+What about who does the most tweeting, whether direct or retweets?
+
+```{r counts2012}
+counts2012 <- tweetCounts(ismb)
+head(counts2012)
+head(counts2012[order(counts2012$total, decreasing = TRUE),])
+```
+
+```{r counts2012Original}
+head(counts2012[order(counts2012$original, decreasing = TRUE), ])
+```
+
+```{r counts2012retweet}
+head(counts2012[order(counts2012$retweet, decreasing = TRUE), ])
 ```
 
