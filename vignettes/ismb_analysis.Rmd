@@ -126,11 +126,31 @@ bothYears <- intersect(ismb12$screenName, ismb14$screenName)
 counts2012$rank <- tweetRank(counts2012$total)
 counts2014$rank <- tweetRank(counts2014$total)
 
-
+countDiff1214 <- abs(counts2012[bothYears, "rank"] - counts2014[bothYears, "rank"])
+countDiff1214 <- data.frame(screenName = bothYears, diff = countDiff1214, stringsAsFactors = FALSE)
+countDiff1214 <- countDiff1214[order(countDiff1214$diff),]
+head(countDiff1214)
+tail(countDiff1214)
 ```
 
 ```{r findRT}
 rtCount12 <- retweetCount(ismb12)
 rtCount14 <- retweetCount(ismb14)
+```
+
+```{r rankRT}
+rtTot12 <- totalRT(rtCount12, "countRT")
+rtTot14 <- totalRT(rtCount14, "countRT")
+
+rtTot12$rank <- tweetRank(rtTot12$sumRT)
+rtTot14$rank <- tweetRank(rtTot14$sumRT)
+
+bothRT <- intersect(rtTot12$screenName, rtTot14$screenName)
+
+rtDiff1214 <- abs(rtTot12[bothRT, "rank"] - rtTot14[bothRT, "rank"])
+rtDiff1214 <- data.frame(screenName = bothRT, diff = rtDiff1214, stringsAsFactors = FALSE)
+rtDiff1214 <- rtDiff1214[order(rtDiff1214$diff), ]
+head(rtDiff1214)
+tail(rtDiff1214)
 ```
 

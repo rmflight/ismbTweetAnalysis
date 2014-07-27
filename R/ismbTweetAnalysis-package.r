@@ -124,3 +124,17 @@ tweetRank <- function(tweetCounts){
   
   return(twRank)
 }
+
+#' total retweeted
+#' 
+#' how often a users tweets were retweeted
+#' 
+#' @param tweetDF data.frame of tweets
+#' @param countColumn which column has the retweet counts (should be a text id)
+#' @export
+#' @return data.frame of counts
+totalRT <- function(tweetDF, countColumn){
+  totRT <- tapply(tweetDF[, countColumn], tweetDF[, "screenName"], sum)
+  totRT <- data.frame(screenName = names(totRT), sumRT = totRT)
+  return(totRT)
+}
