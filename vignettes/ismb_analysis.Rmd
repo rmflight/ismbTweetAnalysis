@@ -17,9 +17,9 @@ extPath <- file.path(baseLoc, "extdata")
 
 ```{r data2012, eval=FALSE}
 load(file.path(extPath, "ismb2012.RData"))
-ismb <- ismb[, c("text", "created", "id", "screenName")]
-ismb$hashSearch <- "ismb"
-save(ismb, file="data/ismb2012.RData")
+ismb12 <- ismb[, c("text", "created", "id", "screenName")]
+ismb12$hashSearch <- "ismb"
+save(ismb12, file="data/ismb2012.RData")
 ```
 
 This is especially important for the 2014 data, because it is not in `rdata` format, and there were actually three different hashtags searched for. 
@@ -28,8 +28,8 @@ This is especially important for the 2014 data, because it is not in `rdata` for
 ismb <- readTweetData(file.path(extPath, "ismb.txt"), "ismb")
 ismb2014 <- readTweetData(file.path(extPath, "ismb2014.txt"), "ismb2014")
 ismb14 <- readTweetData(file.path(extPath, "ismb14.txt"), "ismb14")
-ismb <- rbind(ismb, ismb14, ismb2014)
-save(ismb, file="data/ismb2014.RData")
+ismb14 <- rbind(ismb, ismb14, ismb2014)
+save(ismb14, file="data/ismb2014.RData")
 ```
 
 # Analysis
@@ -63,5 +63,35 @@ head(counts2012[order(counts2012$original, decreasing = TRUE), ])
 
 ```{r counts2012retweet}
 head(counts2012[order(counts2012$retweet, decreasing = TRUE), ])
+```
+
+## 2014
+
+Lets do a similar analysis for 2014. Before we go on, we will copy the current `ismb` object to `ismb2012` so we can combine things later.
+
+```{r moveISMB}
+ismb2012 <- ismb
+ismb2012$year <- "2012"
+```
+
+```{r load2014}
+data(ismb2014)
+```
+
+Simple visualization of the tweets by time.
+
+```{r vis2014}
+ggplot(ismb, aes(x = created)) + geom_bar()
+```
+
+Again, who does the most tweeting and retweeting?
+
+```{r counts2014}
+counts2014 <- tweetCounts(ismb)
+head(counts2014)
+```
+
+```{r topTotal}
+head(counts2014[order(counts2014$total, decreasing=TRUE), ])
 ```
 
