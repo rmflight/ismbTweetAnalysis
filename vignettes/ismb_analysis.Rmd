@@ -41,18 +41,18 @@ Lets do some simple things in each case. For example, we can look at the distrib
 ```{r load2012}
 library(ismbTweetAnalysis)
 data(ismb2012)
-head(ismb)
+head(ismb12)
 ```
 
 ```{r visualize2012}
 library(ggplot2)
-ggplot(ismb, aes(x=created)) + geom_bar()
+ggplot(ismb12, aes(x=created)) + geom_bar()
 ```
 
 What about who does the most tweeting, whether direct or retweets?
 
 ```{r counts2012}
-counts2012 <- tweetCounts(ismb)
+counts2012 <- tweetCounts(ismb12)
 head(counts2012)
 head(counts2012[order(counts2012$total, decreasing = TRUE),])
 ```
@@ -67,12 +67,7 @@ head(counts2012[order(counts2012$retweet, decreasing = TRUE), ])
 
 ## 2014
 
-Lets do a similar analysis for 2014. Before we go on, we will copy the current `ismb` object to `ismb2012` so we can combine things later.
-
-```{r moveISMB}
-ismb2012 <- ismb
-ismb2012$year <- "2012"
-```
+Lets do a similar analysis for 2014. 
 
 ```{r load2014}
 data(ismb2014)
@@ -81,17 +76,21 @@ data(ismb2014)
 Simple visualization of the tweets by time.
 
 ```{r vis2014}
-ggplot(ismb, aes(x = created)) + geom_bar()
+ggplot(ismb14, aes(x = created)) + geom_bar()
 ```
 
 Again, who does the most tweeting and retweeting?
 
 ```{r counts2014}
-counts2014 <- tweetCounts(ismb)
+counts2014 <- tweetCounts(ismb14)
 head(counts2014)
 ```
 
-```{r topTotal}
+```{r topTotal2014}
 head(counts2014[order(counts2014$total, decreasing=TRUE), ])
+```
+
+```{r topRT2014}
+head(counts2014[order(counts2014$retweet, decreasing=TRUE), ])
 ```
 
