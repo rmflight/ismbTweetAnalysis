@@ -109,3 +109,18 @@ retweetCount <- function(tweetDF){
   orgDF <- orgDF[order(orgDF$countRT, decreasing = TRUE), ]
   return(orgDF)
 }
+
+#' total tweet rank
+#' 
+#' calculates rank of a user by the percentage of total tweets
+#' 
+#' @param tweetCounts a vector of tweets by user
+#' @return ranks by percentage of total from tweetCounts
+#' @export
+tweetRank <- function(tweetCounts){
+  twTotal <- sum(tweetCounts)
+  twPerc <- tweetCounts / twTotal
+  twRank <- rank(twPerc)
+  
+  return(twRank)
+}

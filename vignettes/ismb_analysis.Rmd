@@ -118,6 +118,17 @@ ggplot(diffAll, aes(x = time, fill = year)) + geom_density(alpha = 0.5)
 
 Assuming that there are repeat tweeters between the years, lets compare their ranks between the two years. We will use two metrics, total number of original tweets (not retweets), and how many retweets an individual got (measure of popularity of a tweet).
 
+```{r bothConf}
+bothYears <- intersect(ismb12$screenName, ismb14$screenName)
+```
+
+```{r calcRanks}
+counts2012$rank <- tweetRank(counts2012$total)
+counts2014$rank <- tweetRank(counts2014$total)
+
+
+```
+
 ```{r findRT}
 rtCount12 <- retweetCount(ismb12)
 rtCount14 <- retweetCount(ismb14)
