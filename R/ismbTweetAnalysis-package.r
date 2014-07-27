@@ -82,3 +82,30 @@ tweetCounts <- function(tweetDF){
   tweetC <- data.frame(screenName = names(rtSplit), total = nTweet, original = nTweet - nRT, retweet = nRT, stringsAsFactors = FALSE)
   return(tweetC)
 }
+
+#' find rt counts
+#' 
+#' for each original tweet, find the number of times it was retweeted.
+#' 
+#' @param tweetDF the data.frame of tweets
+#' @export
+#' @return data.frame of original tweets with countRT added
+retweetCount <- function(tweetDF){
+  notRT <- !(grepl("^RT", tweetDF$text))
+  isRT <- !notRT
+  
+  orgDF <- tweetDF[notRT, ]
+  rtDF <- tweetDF[isRT, ]
+  
+  splitOrg <- split(orgDF$text, orgDF$screenName)
+  
+  nOrg <- sapply(splitOrg, length)
+  
+  countRT <- unlist(lapply(orgDF$text, function(findTweet){
+    length(grep(findTweet, rtDF$text, fixed = TRUE))
+  }), use.names = FALSE)
+  
+  orgDF$countRT <- countRT
+  orgDF <- orgDF[order(orgDF$countRT, decreasing = TRUE), ]
+  return(orgDF)
+}

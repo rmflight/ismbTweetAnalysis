@@ -114,4 +114,12 @@ diffAll <- data.frame(time = c(diff12, diff14), year = rep(c("12", "14"), times 
 ggplot(diffAll, aes(x = time, fill = year)) + geom_density(alpha = 0.5)
 ```
 
+### Ranking of Repeat Tweeters
+
+Assuming that there are repeat tweeters between the years, lets compare their ranks between the two years. We will use two metrics, total number of original tweets (not retweets), and how many retweets an individual got (measure of popularity of a tweet).
+
+```{r findRT}
+rtCount12 <- retweetCount(ismb12)
+rtCount14 <- retweetCount(ismb14)
+```
 
